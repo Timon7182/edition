@@ -1,0 +1,7 @@
+<fetchPlans xmlns="http://jmix.io/schema/core/fetch-plans">
+    <fetchPlan entity="edt_Product" name="product-rest-all-fetch-plan" extends="_base">
+        <property name="category" fetchPlan="_base"/>
+        <property name="images" fetchPlan="_base"/>
+        <property name="amenities" fetchPlan="_base"/>
+    </fetchPlan>
+</fetchPlans>

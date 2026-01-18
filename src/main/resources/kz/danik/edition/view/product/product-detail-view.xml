@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://productDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="productDc"
+                  class="kz.danik.edition.entity.Product">
+            <fetchPlan extends="_base">
+                <property name="active"/>
+                <property name="category" fetchPlan="_base"/>
+                <property name="images" fetchPlan="_base"/>
+                <property name="amenities" fetchPlan="_base"/>
+                <property name="bookings" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="productDl"/>
+            <collection id="imagesDc" property="images"/>
+            <collection id="amenitiesDc" property="amenities"/>
+            <collection id="bookingsDc" property="bookings"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveCloseAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="productDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <textArea id="langValueRuField" height="9.5em" property="langValueRu"/>
+            <checkbox id="activeField" property="active"/>
+            <entityPicker id="categoryField" property="category">
+                <actions>
+                    <action id="entityLookupAction" type="entity_lookup"/>
+                    <action id="entityClearAction" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <textField id="peopleCountField" property="peopleCount"/>
+            <textField id="floorField" property="floor"/>
+            <textField id="floorStringValueField" property="floorStringValue"/>
+            <select id="priceTypeField" property="priceType"/>
+            <textField id="priceField" property="price"/>
+            <select id="bookingTypeField" property="bookingType"/>
+            <textField id="roomSpaceField" property="roomSpace"/>
+        </formLayout>
+        <h4 text="msg://kz.danik.edition.entity/Product.images"/>
+        <hbox id="imagesButtonsPanel" classNames="buttons-panel">
+            <button action="imagesDataGrid.addAction"/>
+            <button action="imagesDataGrid.excludeAction"/>
+        </hbox>
+        <dataGrid id="imagesDataGrid" dataContainer="imagesDc" width="100%" minHeight="20em">
+            <actions>
+                <action id="addAction" type="list_add"/>
+                <action id="excludeAction" type="list_exclude"/>
+            </actions>
+            <columns>
+                <column property="file"/>
+            </columns>
+        </dataGrid>
+        <h4 text="msg://kz.danik.edition.entity/Product.amenities"/>
+        <hbox id="amenitiesButtonsPanel" classNames="buttons-panel">
+            <button action="amenitiesDataGrid.addAction"/>
+            <button action="amenitiesDataGrid.excludeAction"/>
+        </hbox>
+        <dataGrid id="amenitiesDataGrid" dataContainer="amenitiesDc" width="100%" minHeight="20em">
+            <actions>
+                <action id="addAction" type="list_add"/>
+                <action id="excludeAction" type="list_exclude"/>
+            </actions>
+            <columns>
+                <column property="langValue"/>
+                <column property="langValueRu"/>
+                <column property="langValueKz"/>
+                <column property="langValueEn"/>
+                <column property="code"/>
+            </columns>
+        </dataGrid>
+
+        <h4 text="msg://kz.danik.edition.entity/Product.bookings"/>
+        <hbox id="bookingsButtonsPanel" classNames="buttons-panel">
+            <button action="bookingsDataGrid.createAction"/>
+            <button action="bookingsDataGrid.editAction"/>
+            <button action="bookingsDataGrid.removeAction"/>
+        </hbox>
+        <dataGrid id="bookingsDataGrid" dataContainer="bookingsDc" width="100%" height="100%">
+            <actions>
+                <action id="createAction" type="list_create">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="editAction" type="list_edit">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="removeAction" type="list_remove"/>
+            </actions>
+            <columns>
+                <column property="langValueRu"/>
+                <column property="status"/>
+                <column property="dateFrom"/>
+                <column property="dateTo"/>
+                <column property="hoursFrom"/>
+                <column property="hoursTo"/>
+            </columns>
+        </dataGrid>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveCloseAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

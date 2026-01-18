@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://productBookingListView.title"
+      focusComponent="productBookingsDataGrid">
+    <data>
+        <collection id="productBookingsDc"
+                    class="kz.danik.edition.entity.ProductBooking">
+            <fetchPlan extends="_base"/>
+            <loader id="productBookingsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from edt_ProductBooking e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="productBookingsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="productBookingsDataGrid.createAction"/>
+            <button id="editButton" action="productBookingsDataGrid.editAction"/>
+            <button id="removeButton" action="productBookingsDataGrid.removeAction"/>
+            <simplePagination id="pagination" dataLoader="productBookingsDl"/>
+        </hbox>
+        <dataGrid id="productBookingsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="productBookingsDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="createAction" type="list_create"/>
+                <action id="editAction" type="list_edit"/>
+                <action id="removeAction" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="langValueRu"/>
+                <column property="status"/>
+                <column property="dateFrom"/>
+                <column property="dateTo"/>
+                <column property="hoursFrom"/>
+                <column property="hoursTo"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>
