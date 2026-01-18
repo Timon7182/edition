@@ -143,7 +143,7 @@ public class RoomBookingService {
             select count(b) from edt_RoomBooking b
             where b.deletedDate is null
               and b.room.id = :roomId
-              and b.status <> 'CANCELED'
+              and b.status <> 'CANCELLED'
               and b.startAt < :endAt
               and b.endAt > :startAt
         """;
